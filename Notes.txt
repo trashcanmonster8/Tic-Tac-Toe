@@ -1,0 +1,22 @@
+Notes
+
+Board
+  Behaviors
+    Determine win/tie
+    Place makers
+    Switch Turns
+  Properties
+    Structure of the board (3x3 grid)
+    Markers
+Opponent
+  Behaviors
+    Place marker
+  Properties
+    Turn
+    Marker Type
+Player
+  Behaviors
+    Place Marker
+  Properties
+    Turn
+    Marker Type
