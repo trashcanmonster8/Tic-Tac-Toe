@@ -1,51 +1,44 @@
 class Board
 
-attr_reader :board
-attr_reader :desplay
-attr_reader :markerhash
-
 #initialize the class by creating the board
   def initialize()
-    @board = [[ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ]]
+    $board = [[ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ]]
 
-    @markerhash = {
-      'x' => 1,
-      'o' => -1,
+    @boardtomarkerhash = {
+      -1 => ' o',
+      1 => ' x',
+      0 => ' _'
     }
-  end
 
-  def PlaceMarker(x, y, symbol)
+    $markertoboardhash = {
+      'x' => 1,
+      'o' => -1
+    }
 
-    if @board[y][x] != 0
-      @board[y],[x] = @markerhash[symbol]
-    else
-      puts "Invalid placement"  #TODO
-      PlaceMarker()
-    end
-
+    system('cls')
+    puts "Welcome to Tic-Tac-Toe!"
   end
 
   def EndGame()
-    board = @board
 
 #Check rows
     for i in 0..2
-
+      gameover = false
       sum = 0
 
       for j in 0..2
-        sum += board[i][j]
+        sum += $board[i][j]
       end
 
-      if sum = -3
-        puts "O wins!"
-        return True
+      if sum == -3
+        puts "o wins!"
+        gameover = true
         break
       end
 
-      if sum = 3
-        puts "X wins!"
-        return True
+      if sum == 3
+        puts "x wins!"
+        gameover = true
         break
       end
     end
@@ -56,18 +49,18 @@ attr_reader :markerhash
       sum = 0
 
       for i in 0..2
-        sum += board[i][j]
+        sum += $board[i][j]
       end
 
-      if sum = -3
-        puts "Computer wins!"
-        return True
+      if sum == -3
+        puts "o wins!"
+        gameover = true
         break
       end
 
-      if sum = 3
-        puts "You win!"
-        return True
+      if sum == 3
+        puts "x win!"
+        gameover = true
         break
       end
     end
@@ -76,37 +69,50 @@ attr_reader :markerhash
     sum = 0
 
     for i in 0..2
-      sum += board[i][i]
+      sum += $board[i][i]
     end
 
-    if sum = -3
-      puts "Computer wins!"
-      return True
+    if sum == -3
+      puts "o wins!"
+      gameover = true
     end
 
-    if sum = 3
-      puts "You win!"
-      return True
+    if sum == 3
+      puts "x win!"
+      gameover = true
     end
 
 #Check other diagonal
     sum = 0
 
     for i in 0..2
-      sum[2-i][i]
+      sum += $board[2-i][i]
     end
 
-    if sum = -3
-      puts "Computer wins!"
-      return True
+    if sum == -3
+      puts "o wins!"
+      gameover = true
     end
 
-    if sum = 3
-      puts "You win!"
-      return True
+    if sum == 3
+      puts "x win!"
+      gameover = true
     end
 
-#If all if-statements pass return false to continue the game
-    return false
+    return gameover
+  end
+
+  def PrintBoard
+    system('cls')
+
+    puts "  1 2 3"
+
+    for i in 0..2
+      print i + 1
+      for j in 0..2
+        print @boardtomarkerhash[$board[j][i]]
+      end
+      puts ""
+    end
   end
 end

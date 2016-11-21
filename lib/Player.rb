@@ -1,27 +1,45 @@
 class Player
 
-attr_writer @name
-attr_reader @marker
+attr_reader :name
 
   def initialize
-    prints "Please enter your name: "
-
+    print "Please enter your name: "
     @name = gets.chomp
-  end
 
-  def turn
+    assign_marker
   end
 
   def assign_marker
     begin
-      prints "x or o? "
+      print "x or o? "
       @marker = gets.chomp
 
-      if @marker != 'x' || @marker != 'o'
-        puts "Invalid response.\n"
-      end    
-    end while @marker != 'x' || @marker != 'o'
+      validentry = @marker == 'x' || @marker == 'o'
 
+      if !validentry
+        puts "Invalid response.\n"
+      end
+    end while !validentry
   end
 
+  def place_marker
+    begin
+      print  @name + ", what is your next move? Enter column: "
+      row = Integer(gets.chomp)
+
+      print @name + ", enter row: "
+      column = Integer(gets.chomp)
+
+      validentry = (row > 0 || row <= 3) && (column > 0 || column <= 3)
+
+      if !validentry
+        puts "Invalid entry."
+      elsif $board[row - 1][column - 1] != 0
+        puts "Invalid entry."
+        validentry = false
+      end
+    end while !validentry
+
+    $board[row - 1][column - 1] = $markertoboardhash[@marker]
+  end
 end
